@@ -69,6 +69,33 @@
 }
 @media(max-height:720px) and (max-width:759px){#intro .intro-center{top:28%;gap:7px}#intro .cta{top:77%}#intro .icon-row{padding:7px 5px}.tour-gallery-photo{height:31dvh}}
 @media(min-width:760px){#intro .intro-center{left:50%;right:auto;transform:translateX(-50%);width:min(480px,86%)}#intro .cta{width:min(440px,80%);left:50%;transform:translateX(-50%)}.more-facts{display:block}}
+
+/* V11: immersive first screen; details are reached by vertical scroll */
+.tour-gallery-photo{height:clamp(250px,39dvh,480px);object-fit:contain;background:#e8e3d7}
+.tour-first-screen{display:flex;flex-direction:column;gap:0}
+.scroll-cue{text-align:center;font-size:11px;color:#847a66;padding:11px 0 7px;letter-spacing:.02em}
+.tour-below{padding:18px 0 24px;border-top:1px solid #ded2bd}
+@media(max-width:759px){
+ .sheet-header{min-height:45px;padding:6px 17px 7px}
+ .sheet-header h2{font-size:17px}
+ .sheet-actions{padding:7px 17px max(7px,env(safe-area-inset-bottom,0px))}
+ .provider{min-height:45px;font-size:15px}
+ .sheet-scroll{padding:0 13px 14px}
+ .tour-first-screen{min-height:calc(100dvh - env(safe-area-inset-top,0px) - env(safe-area-inset-bottom,0px) - 117px);justify-content:flex-start}
+ .tour-gallery{margin-bottom:9px}
+ .tour-gallery-photo{height:clamp(230px,41dvh,490px)}
+ .tour-head-compact{margin-bottom:3px}
+ .tour-head-compact h3{font-size:clamp(14px,3.8vw,18px);margin:2px 0 5px}
+ .mini-metadata span{font-size:10px;padding:3px 5px}
+ .section-label{margin:7px 0 5px;font-size:12px}
+ .mineral-grid{padding:5px 7px;gap:5px}
+ .mineral-item img{height:clamp(49px,8dvh,77px)}
+ .mineral-item small{font-size:10px;min-height:15px}
+ .scroll-cue{margin-top:auto}
+}
+@media(max-width:759px) and (max-height:730px){.tour-gallery-photo{height:35dvh}.mineral-item img{height:52px}.tour-first-screen{min-height:calc(100dvh - 111px - env(safe-area-inset-top,0px) - env(safe-area-inset-bottom,0px))}}
+@media(min-width:760px){.tour-gallery-photo{height:clamp(190px,28dvh,300px)}.tour-first-screen{min-height:0}}
+@media(prefers-reduced-motion:reduce){.gallery-control{transition:none}}
 </style></head><body>
 <section id="intro" class="view active" aria-label="Geburtstagseinladung">
 <div class="intro-content"><div class="intro-center"><div class="ribbon"><h1><span>Alles Gute</span>zum Geburtstag!</h1></div><div class="intro-sub">Auf zur Suche nach<br><em>unserem Schatz!</em></div><div class="icon-row">
@@ -84,6 +111,7 @@ function esc(s){return String(s??'').replace(/[&<>"']/g,ch=>({'&':'&amp;','<':'&
 function init(){if(map)return;map=L.map('map',{zoomControl:window.innerWidth>=760,scrollWheelZoom:false,preferCanvas:true}).setView([48.3,12.1],5);
 L.tileLayer('https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png',{maxZoom:17,attribution:'© OpenStreetMap · SRTM · OpenTopoMap'}).addTo(map);
 layer=L.layerGroup().addTo(map);tours.forEach(t=>{const ico=L.divIcon({className:'',html:`<div class="gem-pin">${gemIcon}</div>`,iconSize:[40,45],iconAnchor:[20,42]});markers[t.id]=L.marker([t.lat,t.lng],{icon:ico,title:t.name}).addTo(layer).on('click',()=>show(t.id));});map.fitBounds(tours.map(t=>[t.lat,t.lng]),{padding:[45,45],maxZoom:7});setTimeout(()=>map.invalidateSize(),110);}
+const allTourPhotos={"schlottwitz": ["assets/images/fundorte/schlottwitz/0ce5a7b0-84a5-4cc9-83c9-feab5fab762a_l.jpg", "assets/images/fundorte/schlottwitz/Claim2.jpg", "assets/images/fundorte/schlottwitz/felssturzbeischlottwitz-f05.jpg", "assets/images/fundorte/schlottwitz/FND-Achataufschluss-Oberschlottwitz-G-6-19.jpg", "assets/images/fundorte/schlottwitz/LEU5OOJCREW5RMIUFVZXSARPLU.jpg", "assets/images/fundorte/schlottwitz/s-l1200.jpg", "assets/images/fundorte/schlottwitz/Schlottwitz.jpg", "assets/images/fundorte/schlottwitz/Stein10.jpg", "assets/images/fundorte/schlottwitz/Stein9.jpg"], "prerow": ["assets/images/fundorte/prerow/148.jpg", "assets/images/fundorte/prerow/1770114628_17856814e8593bbfc4da85ad477d2888.jpg", "assets/images/fundorte/prerow/20163103.jpg", "assets/images/fundorte/prerow/bernsteinfundeteilnehmerbernsteinwanderung-768x438.jpg", "assets/images/fundorte/prerow/bernsteinwandern_seeigel-1024x683.jpg", "assets/images/fundorte/prerow/caption (1).jpg", "assets/images/fundorte/prerow/caption.jpg", "assets/images/fundorte/prerow/CGI3IN6YRJGFDLDHL57TIBIJCM.jpg", "assets/images/fundorte/prerow/D2EMTNQQMJGDTLAOAF3FP2UHJE.jpg"], "binntal": ["assets/images/fundorte/gorsatt-binntal/1644832406-509.jpg", "assets/images/fundorte/gorsatt-binntal/_srce8c452afbe2a6575d4445f847e3eb35d_parb805a38d0f5a88fc59bd26aa31df8ce5_dat1736341207.jpeg", "assets/images/fundorte/gorsatt-binntal/Bergkristall-1.jpg", "assets/images/fundorte/gorsatt-binntal/Ewald-Gorsatt.jpg", "assets/images/fundorte/gorsatt-binntal/images.jpg", "assets/images/fundorte/gorsatt-binntal/Kristallkluft.jpg", "assets/images/fundorte/gorsatt-binntal/lac-binntal-1024x728.jpg", "assets/images/fundorte/gorsatt-binntal/Strahler-02.jpg", "assets/images/fundorte/gorsatt-binntal/vista-esterna.jpg"], "habachtal": ["assets/images/fundorte/habachtal/0410_smaragd_g.jpg", "assets/images/fundorte/habachtal/1-2.jpg", "assets/images/fundorte/habachtal/2-c.jpg", "assets/images/fundorte/habachtal/492708013_1158681809620401_7450536034926370433_n.jpg", "assets/images/fundorte/habachtal/Blick-ins-Habachtal-2-835x1024.jpg", "assets/images/fundorte/habachtal/habachtal-2-1.jpg", "assets/images/fundorte/habachtal/IMG_4727-scaled.jpeg", "assets/images/fundorte/habachtal/smaragd-habachtal.jpg", "assets/images/fundorte/habachtal/sommer-wandern-smaragdschuerfen-2.jpg"], "granatium": ["assets/images/fundorte/granatium/0_49-9873-web_granatium_2021#U00a9gert_perauer-1024x683.jpg", "assets/images/fundorte/granatium/28-1954-web_Granatium-Radenthein_2026_by_Gert_Perauer-1024x683.jpg", "assets/images/fundorte/granatium/5b0cb42057114c5c0beef4eb926d44b1.jpg", "assets/images/fundorte/granatium/Granatium,_Radenthein,_Austria_02.jpg", "assets/images/fundorte/granatium/granatium-radenthein-62256.jpg", "assets/images/fundorte/granatium/Granatschlucht-Granatium-Schuerfgelaende.jpg", "assets/images/fundorte/granatium/IMG_3786-Granatium-365Austria-Paul-Weindl.jpg", "assets/images/fundorte/granatium/stollen#U00a9W_KURY8984.jpg", "assets/images/fundorte/granatium/Stollen.jpg"], "teis": ["assets/images/fundorte/teis/198D2BE23D70B313C8333186FD3183EE.jpeg", "assets/images/fundorte/teis/2660be2b2df02c41fc17abdbfc676d66.jpg", "assets/images/fundorte/teis/515ce30e6b074cc4700196fb8433a7b5dca75c76-00b2cdc2a44ef058f57980d3524ac9f1.jpg", "assets/images/fundorte/teis/638_id_1242.jpg", "assets/images/fundorte/teis/706e67ae3c6f4c048dcf096e547e6bbaf242f710-teisvtg.jpg", "assets/images/fundorte/teis/DD46B47B2510D5B64BFCB4749E3D195F.jpeg", "assets/images/fundorte/teis/t.k.such.jpg", "assets/images/fundorte/teis/teiser-stern-villnoess-suedtirol-hotel-restaurant-bar-restaurant-umgebung-header-mobile-650x900-crop-50-50.jpg", "assets/images/fundorte/teis/web-rendition-3.jpeg"], "bixi-rocks": ["assets/images/fundorte/bixi-rocks/669fdf58-580e-49a6-b623-2d0205830b9c-1024x768.jpg", "assets/images/fundorte/bixi-rocks/8ec6770e-f133-42e3-9437-97af2cc9192c.jpg", "assets/images/fundorte/bixi-rocks/a5411e7d-3d3b-4727-aa07-4b4389a6a0b5-1024x768.jpg", "assets/images/fundorte/bixi-rocks/cropped-Bixi-Bixi-scaled-1-1022x1024.jpg", "assets/images/fundorte/bixi-rocks/GW1-1024x790.jpg", "assets/images/fundorte/bixi-rocks/Kristall-1024x737.jpg", "assets/images/fundorte/bixi-rocks/n-max-16x9.jpg", "assets/images/fundorte/bixi-rocks/ST8-1024x768.jpg", "assets/images/fundorte/bixi-rocks/thumbnail-2-1024x737.jpg"], "piotr-sarul": ["assets/images/fundorte/piotr-sarul/images (1).jpg", "assets/images/fundorte/piotr-sarul/images.jpg", "assets/images/fundorte/piotr-sarul/piotr-sarul.jpg", "assets/images/fundorte/piotr-sarul/poszukiwanie-mineralow.jpg", "assets/images/fundorte/piotr-sarul/poszukwanie-mineralow-1.jpg", "assets/images/fundorte/piotr-sarul/restaurant-poland-villa-greta.jpeg", "assets/images/fundorte/piotr-sarul/warsztaty-geologiczne-dolny-slask.jpg", "assets/images/fundorte/piotr-sarul/widok-z-kamieniolomu-gruszka.jpg", "assets/images/fundorte/piotr-sarul/Wulkany_1.jpg"], "mine-pegut": ["assets/images/fundorte/mine-pegut/42770115-diaporama-1200x675.png", "assets/images/fundorte/mine-pegut/636391ea6c606ebb5577f06a-scaled.jpg", "assets/images/fundorte/mine-pegut/images (1).jpg", "assets/images/fundorte/mine-pegut/images (2).jpg", "assets/images/fundorte/mine-pegut/images.jpg", "assets/images/fundorte/mine-pegut/images1.jpg", "assets/images/fundorte/mine-pegut/mine-redim.jpg", "assets/images/fundorte/mine-pegut/mines_damethystes-champagnat-le-jeune-63580-puy-de-dome-auvergne-rhone-alpes.jpg", "assets/images/fundorte/mine-pegut/QwRY54Li1HMwD7oNfopR4bde2AsiBRzgv6fqlH8acu.jpg"]};
 const ART_ROOT='assets/images/mineralien-illustrationen/';
 const mineralSets={
  'schlottwitz':[['Achat','achat'],['Amethyst','amethyst'],['Quarz','bergkristall']],
@@ -93,25 +121,29 @@ const mineralSets={
  'granatium':[['Granat','granat']],
  'teis':[['Teiser Kugel','teiser-kugel'],['Achat / Chalcedon','achat'],['Quarz','bergkristall']],
  'bixi-rocks':[['Bergkristall','bergkristall']],
- 'piotr-sarul':[['Achat','achat'],['Septarie','septarie']],
+ 'piotr-sarul':[['Achat','achat'],['Septarie','sepatarie']],
  'mine-pegut':[['Amethyst','amethyst']]
 };
-let galleryIndex=0;
-function setGalleryIndex(next){if(!selected)return;const pics=selected.gallery?.length?selected.gallery:[selected.image];galleryIndex=(next+pics.length)%pics.length;const im=document.getElementById('gallery-photo'),ct=document.getElementById('gallery-count');if(im){im.src=pics[galleryIndex];im.alt=`Foto ${galleryIndex+1} von ${pics.length}: ${selected.name}`;}if(ct)ct.textContent=`${galleryIndex+1} / ${pics.length}`;}
+let galleryIndex=0, galleryTimer=null;
+function photosFor(t){const extra=allTourPhotos[t.id]||[];return [...new Set([...(t.gallery||[t.image]),...extra])];}
+function stopGallery(){if(galleryTimer!==null){clearInterval(galleryTimer);galleryTimer=null;}}
+function startGallery(){stopGallery();if(selected&&photosFor(selected).length>1){galleryTimer=setInterval(()=>{if(selected&&sheet.classList.contains('visible')&&!document.hidden)setGalleryIndex(galleryIndex+1);},10000);}}
+
+function setGalleryIndex(next){if(!selected)return;const pics=photosFor(selected);galleryIndex=(next+pics.length)%pics.length;const im=document.getElementById('gallery-photo'),ct=document.getElementById('gallery-count');if(im){im.src=pics[galleryIndex];im.alt=`Foto ${galleryIndex+1} von ${pics.length}: ${selected.name}`;}if(ct)ct.textContent=`${galleryIndex+1} / ${pics.length}`;}
 function show(id){
- selected=tours.find(t=>t.id===id);if(!selected)return;galleryIndex=0;
+ stopGallery();selected=tours.find(t=>t.id===id);if(!selected)return;galleryIndex=0;
  document.getElementById('hint').classList.add('off');
- const pics=selected.gallery?.length?selected.gallery:[selected.image];
+ const pics=photosFor(selected);
  const minerals=mineralSets[selected.id]||[];
- const gallery=`<div class="tour-gallery" aria-label="Fotogalerie"><img id="gallery-photo" class="tour-gallery-photo" src="${esc(pics[0])}" alt="Foto 1 von ${pics.length}: ${esc(selected.name)}"><button type="button" class="gallery-control prev" data-gallery="prev" aria-label="Vorheriges Foto">‹</button><button type="button" class="gallery-control next" data-gallery="next" aria-label="Nächstes Foto">›</button><span class="gallery-count" id="gallery-count">1 / ${pics.length}</span></div>`;
- const mineralHtml=minerals.map(([name,art])=>`<div class="mineral-item ${art?'':'no-art'}">${art?`<img src="${ART_ROOT+art}.${['calcit','septarie','fossilien','teiser-kugel'].includes(art)?'svg':'webp'}" alt="Aquarellillustration: ${esc(name)}" loading="lazy">`:'<span class="mineral-placeholder" aria-hidden="true">◇</span>'}<small>${esc(name)}</small></div>`).join('');
- sheetContent.innerHTML=`${gallery}<div class="tour-head-compact"><div class="country">${esc(selected.spot)}</div><h3>${esc(selected.name)}</h3><div class="mini-metadata"><span>✦ ${esc(selected.provider)}</span><span>⛰ Echte Suche</span></div></div><p class="tour-desc">${esc(selected.description)}</p><div class="section-label">Mögliche Mineralien</div><div class="mineral-grid">${mineralHtml}</div><div id="facts" class="more-facts open"><p><b>So sucht ihr:</b> ${esc(selected.method)}</p><p><b>Herkunft:</b> ${esc(selected.origin)}</p><p><b>Voraussetzungen:</b> ${esc(selected.difficulty)}</p><p><b>Fundchancen:</b> ${esc(selected.chance)}</p><p><b>Preisorientierung:</b> ${esc(selected.price)}</p><p><b>Hinweis:</b> ${esc(selected.warning)}</p><p>Termine und Mitnahmebedingungen bitte beim Veranstalter bestätigen.</p></div>`;
+ const gallery=`<div class="tour-gallery" aria-label="Fotogalerie" aria-roledescription="Karussell"><img id="gallery-photo" class="tour-gallery-photo" src="${esc(pics[0])}" alt="Foto 1 von ${pics.length}: ${esc(selected.name)}"><button type="button" class="gallery-control prev" data-gallery="prev" aria-label="Vorheriges Foto">‹</button><button type="button" class="gallery-control next" data-gallery="next" aria-label="Nächstes Foto">›</button><span class="gallery-count" id="gallery-count">1 / ${pics.length}</span></div>`;
+ const mineralHtml=minerals.map(([name,art])=>`<div class="mineral-item ${art?'':'no-art'}">${art?`<img src="${ART_ROOT+art}.png" alt="Aquarellillustration: ${esc(name)}" loading="lazy">`:'<span class="mineral-placeholder" aria-hidden="true">◇</span>'}<small>${esc(name)}</small></div>`).join('');
+ sheetContent.innerHTML=`<div class="tour-first-screen">${gallery}<div class="tour-head-compact"><div class="country">${esc(selected.spot)}</div><h3>${esc(selected.name)}</h3><div class="mini-metadata"><span>✦ ${esc(selected.provider)}</span><span>⛰ Echte Suche</span></div></div><div class="section-label">Mögliche Mineralien</div><div class="mineral-grid">${mineralHtml}</div><div class="scroll-cue">Weitere Informationen ↓</div></div><div class="tour-below"><p class="tour-desc">${esc(selected.description)}</p><div id="facts" class="more-facts open"><p><b>So sucht ihr:</b> ${esc(selected.method)}</p><p><b>Herkunft:</b> ${esc(selected.origin)}</p><p><b>Voraussetzungen:</b> ${esc(selected.difficulty)}</p><p><b>Fundchancen:</b> ${esc(selected.chance)}</p><p><b>Preisorientierung:</b> ${esc(selected.price)}</p><p><b>Hinweis:</b> ${esc(selected.warning)}</p><p>Termine und Mitnahmebedingungen bitte beim Veranstalter bestätigen.</p></div></div>`;
  sheet.classList.add('visible');document.getElementById('provider').href=selected.url;
- sheetContent.scrollTop=0;
+ sheetContent.scrollTop=0;startGallery();
  setTimeout(()=>{if(window.innerWidth<760){map.panTo([selected.lat,selected.lng],{animate:true,duration:.4})}},60);
 }
-sheetContent.addEventListener('click',e=>{const btn=e.target.closest('[data-gallery]');if(!btn)return;setGalleryIndex(galleryIndex+(btn.dataset.gallery==='next'?1:-1));});
-let touchX=null;sheetContent.addEventListener('touchstart',e=>{if(e.target.closest('.tour-gallery'))touchX=e.touches[0].clientX;},{passive:true});sheetContent.addEventListener('touchend',e=>{if(touchX===null)return;const dx=e.changedTouches[0].clientX-touchX;if(Math.abs(dx)>45)setGalleryIndex(galleryIndex+(dx<0?1:-1));touchX=null;},{passive:true});
-function closeSheet(){sheet.classList.remove('visible');selected=null;}
+sheetContent.addEventListener('click',e=>{const btn=e.target.closest('[data-gallery]');if(!btn)return;setGalleryIndex(galleryIndex+(btn.dataset.gallery==='next'?1:-1));startGallery();});
+let touchX=null;sheetContent.addEventListener('touchstart',e=>{if(e.target.closest('.tour-gallery'))touchX=e.touches[0].clientX;},{passive:true});sheetContent.addEventListener('touchend',e=>{if(touchX===null)return;const dx=e.changedTouches[0].clientX-touchX;if(Math.abs(dx)>45){setGalleryIndex(galleryIndex+(dx<0?1:-1));startGallery();}touchX=null;},{passive:true});
+function closeSheet(){stopGallery();sheet.classList.remove('visible');selected=null;}
 document.getElementById('begin').addEventListener('click',()=>{intro.classList.remove('active');mapview.classList.add('active');init();});document.getElementById('back').addEventListener('click',()=>{closeSheet();mapview.classList.remove('active');intro.classList.add('active')});document.getElementById('close').addEventListener('click',closeSheet);
 </script></body></html>
